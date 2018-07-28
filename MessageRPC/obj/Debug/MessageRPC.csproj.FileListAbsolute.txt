@@ -1,0 +1,5 @@
+C:\新建文件夹\Projects 3\MessageRPC\MessageRPC\bin\Debug\MessageRPC.dll
+C:\新建文件夹\Projects 3\MessageRPC\MessageRPC\bin\Debug\MessageRPC.pdb
+C:\新建文件夹\Projects 3\MessageRPC\MessageRPC\obj\Debug\MessageRPC.dll
+C:\新建文件夹\Projects 3\MessageRPC\MessageRPC\obj\Debug\MessageRPC.pdb
+C:\新建文件夹\Projects 3\MessageRPC\MessageRPC\obj\Debug\MessageRPC.csprojResolveAssemblyReference.cache
