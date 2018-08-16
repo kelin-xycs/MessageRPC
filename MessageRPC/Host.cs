@@ -68,6 +68,7 @@ namespace MessageRPC
 
         private void Receive(object clientSocket)
         {
+
             Socket s = (Socket)clientSocket;
 
             MessageParser mp = new MessageParser();
@@ -106,7 +107,10 @@ namespace MessageRPC
 
                     //  如果 在 OnMessageArrived 中没有读取完 m.Content ，则需要继续读完 ， 
                     //  否则没有读完的内容会被当成下一次 Request 的 Head ， 导致请求错误 。
-                    mp.ReadToEnd(m.Content);
+                    if (m.Content != null)
+                    {
+                        mp.ReadToEnd(m.Content);
+                    }
 
                     if (error != null)
                     {
@@ -123,7 +127,7 @@ namespace MessageRPC
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " " + ex.ToString());
                     s.Shutdown(SocketShutdown.Both);
                     s.Close();
                     break;

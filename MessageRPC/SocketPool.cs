@@ -27,8 +27,8 @@ namespace MessageRPC
 
         private static Dictionary<IPEndPoint, SocketPool> _dic = new Dictionary<IPEndPoint, SocketPool>();
 
-        private const int _socketLifeTime = 2;
-        private const int _recycleInterval = 1000;
+        //private const int _socketLifeTime = 2;
+        //private const int _recycleInterval = 1000;
 
 
         private Queue<SocketBag> queue = new Queue<SocketBag>();
@@ -70,12 +70,39 @@ namespace MessageRPC
 
         private void Recycle()
         {
-            SocketBag bag = null;
+            DateTime d1 = DateTime.Now;
+            DateTime d2;
+
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                d2 = DateTime.Now;
+
+                //  每 30 秒回收一次
+                if ((d2 - d1).TotalSeconds <= 30)
+                {
+                    continue;
+                }
+
+                DoRecycle();
+
+                d1 = DateTime.Now;
+            }
+        }
+
+        private void DoRecycle()
+        {
+            SocketBag bag;
             Socket s;
 
-            while(true)
+            int count = this.queue.Count;
+
+            for (int i = 0; i < count; i++)
             {
-                Thread.Sleep(_recycleInterval);
+
+                bag = null;
+
 
                 lock (this.queue)
                 {
@@ -87,10 +114,10 @@ namespace MessageRPC
 
 
                 if (bag == null)
-                    continue;
+                    break;
 
-
-                if ((DateTime.Now - bag.lastUseTime).TotalMinutes <= _socketLifeTime)
+                //  Socket 的 生命期 是 2 分钟，超过 2 分钟 未被使用 就会被回收
+                if ((DateTime.Now - bag.lastUseTime).TotalMinutes <= 2)
                 {
                     this.queue.Enqueue(bag);
                 }

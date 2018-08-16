@@ -37,7 +37,7 @@ namespace MessageRPC
 
                 if (receiveCount == 0)
                 {
-                    throw new RPCException("receiveCount = 0 。 客户端已断开连接 。");
+                    throw new RPCException("receiveCount = 0 。 对方主机已断开连接 。");
                 }
 
                 totalReceiveCount += receiveCount;
